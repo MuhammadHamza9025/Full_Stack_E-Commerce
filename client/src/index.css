@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.new {
+    @apply block absolute top-14 bg-slate-50 text-black font-bold text-lg w-[100%] right-0 p-2 space-y-10 transition-all
+}
+
+body {
+    /* @apply bg-pink-50 */
+}
