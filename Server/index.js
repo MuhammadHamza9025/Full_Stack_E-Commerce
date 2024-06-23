@@ -4,17 +4,17 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const cors = require("cors")
 const path = require('path')
-const app = express()
 const Users = require('./Models/ProductModel')
 const loginusers = require('./Models/LoginModel')
 const jwt = require('jsonwebtoken');
 const { rmSync } = require('fs');
+const app = express()
 ///////////////////////////////////////////
 app.use(express.json())
 app.use(cors())
 app.use('/images', express.static('uploads/images'))
 
-mongoose.connect('mongodb://127.0.0.1:27017/Adminpanel').then(() => console.log('Database Created')).catch((err) => console.log(err))
+mongoose.connect('mongodb+srv://Hamza:2vFfwKwATPXWmJy8@social.0drhd5s.mongodb.net/Adminpanel').then(() => console.log('Database Created')).catch((err) => console.log(err))
 
 const storage = multer.diskStorage({
     destination: 'uploads/images', // Assuming 'uploads' is in the root of your project
@@ -36,6 +36,7 @@ app.post('/upload', uploads.single('image'), (req, res) => {
 
 app.post('/addproducts', uploads.single('image'), async (req, res) => {
     const { name, category, old_price, new_price, image, id } = req.body;
+
     const database = Users.create({
         name: name,
         category: category,
@@ -52,8 +53,12 @@ app.post('/addproducts', uploads.single('image'), async (req, res) => {
 
 
 app.get('/addproducts', async (req, res) => {
+    // const newid = await Users.countDocuments()
+    // console.log(newid + 1)
     const getelement = await Users.find()
     res.json(getelement)
+
+
 })
 
 ///////////////////////////////////////////////////////
@@ -66,28 +71,55 @@ app.delete('/addproducts/:id', async (req, res) => {
     const deleteitem = await Users.findByIdAndDelete({ _id: id })
     res.status(203).json(deleteitem)
 })
+///////////////////////////////////////////////
+// Popular in Women 
+
+app.get('/newcollection', async (req, res) => {
+    const newcommectoin = await Users.find()
+    res.json(newcommectoin.slice(-8).slice(-8))
+
+})
 
 
 ///////////////////////////////////////////////////////
 app.post('/signup', async (req, res) => {
     const { Username, email, password, cart } = req.body;
-    const newusers = new loginusers({
-        Username: Username,
-        email: email,
-        password: password,
-        cart: [],
-    })
-    // res.status(210).json(newusers)
-    await newusers.save()
 
-    const data = {
-        newusers: {
-            id: newusers.id
+    const duplicateEmail = await loginusers.findOne({ email: email })
+    if (duplicateEmail) {
+        res.json({ message: "Email Alreay in Use !" })
+
+    }
+    else if (!duplicateEmail) {
+
+
+        if (Username && email && password) { //Check all the info is given or not
+
+
+            const newusers = new loginusers({
+                Username: Username,
+                email: email,
+                password: password,
+                cart: [],
+                id: Date.now()
+            })
+            // res.status(210).json(newusers)
+            await newusers.save()
+
+            const data = {
+                newusers: {
+                    id: newusers.id
+                }
+            }
+
+            const token = jwt.sign(data, 'secret_ecom');
+            res.json({ success: true, token, message: 'Successfully Signed in !' })
+
         }
+        else { res.json({ success: false, message: 'Please Provide All Details !' }) }
     }
 
-    const token = jwt.sign(data, 'secret_ecom');
-    res.json({ success: true, token })
+
 })
 
 ///////////////////////////////////////////
@@ -125,9 +157,28 @@ app.post('/login', async (req, res) => {
 
     // console.log(loginusersdata)
 })
+
+
+////////////////////////////////////////////////
+
+app.get('/users', async (req, res) => {
+    const getusers = await loginusers.find()
+    res.json(getusers)
+})
+
+app.delete('/users/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    const newusers = await loginusers.findByIdAndDelete({ _id: id })
+    res.json(newusers)
+
+
+})
+
 /////////////////////////////////////////////////////////
 const fetchusers = async (req, res, next) => {
     const token = req.header('auth-token');
+    // console.log(token)
     if (!token) {
         res.status(401).send({ success: false, errors: 'Please aunthatucate using valid token.' })
     }
@@ -135,6 +186,8 @@ const fetchusers = async (req, res, next) => {
         try {
             const data = jwt.verify(token, 'secret_ecom')
             req.loginusersdata = data.loginusersdata;
+            // console.log('the data is', data.loginusersdata)
+
             next();
         }
         catch (err) {
@@ -145,38 +198,31 @@ const fetchusers = async (req, res, next) => {
     }
 
 }
+////////////////////////////////////////
 
-// app.post('/cart', fetchusers, async (req, res) => {
-//     // console.log(req.body, req.loginusersdata);
-//     let userdata = await loginusers.findOne({ _id: req.loginusersdata.id })
-//     let update = await loginusers.findByIdAndUpdate({ _id: req.body._id }, { cart: req.body }, { new: true })
-//     // let update = await loginusers.findOneAndUpdate({ _id: req.loginusersdata.id }, { $push: { cart: req.body } }, { new: true })
-//     console.log("the updateis", userdata)
-//     res.json(update)
-// })
+app.post('/cart', fetchusers, async (req, res) => {
 
-// app.get('/cart', fetchusers, async (req, res) => {
-//     let userData = await loginusers.findOne({ _id: req.loginusersdata.id })
-//     res.json(userData)
-//     console.log('The get item si ', userData)
-// })
+    let update = await loginusers.updateOne({ id: req.loginusersdata.id }, { $push: { cart: req.body } }, { new: true }).then(() => console.log('Updtaed')).catch((err) => console.log(err))
 
 
-// app.post('/getcart', fetchusers, async (req, res) => {
-//     console.log('GET /cart route triggered');
-//     try {
-//         let userData = await loginusers.findOne({ _id: req.loginusersdata.id });
-//         res.json(userData.email);
-//         console.log('The get item is ', userData.password);
-//     } catch (error) {
-//         console.error('Error fetching cart:', error);
-//         res.status(500).send({ success: false, errors: 'Internal Server Error' });
-//     }
-// });
+})
+
+app.post('/getcart', fetchusers, async (req, res) => {
+    let userData = await loginusers.findOne({ id: req.loginusersdata.id })
+    res.json(userData)
+    // console.log('The get item si ', req.loginusersdata.id)
+})
+
+
+app.delete('/getcart/:id', fetchusers, async (req, res) => {
+
+    console.log(req.params.id)
+    const nnn = await loginusers.findOneAndUpdate({ id: req.loginusersdata.id, }, { $pull: { cart: { _id: req.params.id } } }, { new: true })
+    res.json(nnn.cart)
 
 
 
-
+})
 
 
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddProducts = ({ getapi, data }) => {
 
     const [name, setname] = useState('')
@@ -31,7 +34,17 @@ const AddProducts = ({ getapi, data }) => {
             //     "Content-Type": "multipart/form-data",
             // },
         }).then(() => console.log('Successfull')).catch((err) => console.log(err))
-        alert("items Added")
+        toast.success("items Added", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+        })
         setname("")
         setprice("")
         setoffer("")
@@ -82,11 +95,12 @@ const AddProducts = ({ getapi, data }) => {
 
 
 
+            <img src="" alt="" />
 
 
-
-
+            <ToastContainer />
         </div>
+
     )
 }
 

@@ -2,3 +2,21 @@
   background-color: linear-gradient(180deg, #fde1ff 0% #e1ffea22 60%);
   flex-wrap: wrap;
 }
+
+@keyframes blink {
+
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0.2;
+  }
+}
+
+.blinking-image {
+  animation: blink 1s infinite;
+}

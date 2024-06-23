@@ -1,9 +1,10 @@
 import React from 'react'
 
+
 const NewsLetter = () => {
     return (
         <>
-            <div className='w-[95%] sm:w-[80%] m-auto p-4  p-10 sm:py-16 bg-purple-200 my-[1em]  flex flex-col justify-center items-center      ' >
+            <div className='w-[95%] sm:w-[80%] m-auto   p-10 sm:py-16 bg-purple-200 my-[1em]  flex flex-col justify-center items-center      ' >
                 <h1 className='text-3xl sm:text-5xl text-center font-bold  '>Get Exclusive Offer on your Email</h1>
                 <h3 className='text-center font-semibold my-[1em]'>Subscribe to our Network and stay Updated.</h3>
                 <div className='border border-gray-500 rounded-full w-[300px] sm:w-[60%] m-auto bg-white  flex justify-between mt-[4em] mb-[1.5em]  gradiant'>

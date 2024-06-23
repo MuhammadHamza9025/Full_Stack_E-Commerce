@@ -5,7 +5,7 @@ import ShopCategory from './ShopCategory'
 import Cartdata from '../Components/Cartdata/Cartdata'
 import Items from '../Components/Items/Items'
 const Cart = () => {
-    const { cartItem } = useContext(ShopContext)
+    const { cartItem, aaaaa } = useContext(ShopContext)
 
     // const [array, setarray] = useState(cartItem.map((val) => val.new_price))  // array form of all prices
     // let [sum, setsum] = useState(0)
@@ -47,12 +47,12 @@ const Cart = () => {
                         </thead>
 
                         {
-                            cartItem?.map((item) => {
+                            cartItem ? cartItem?.map((item) => {
                                 return (<>
-                                    <Cartdata key={item.id} image={item.image} price={item.new_price} category={item.category} name={item.name} id={item.id} ></Cartdata>
+                                    <Cartdata key={item.id} image={item.image} price={item.new_price} category={item.category} name={item.name} id={item._id} ></Cartdata>
 
                                 </>)
-                            })
+                            }) : ''
                         }
 
                     </table>
@@ -64,6 +64,16 @@ const Cart = () => {
                 </div>
 
             }
+            {/* {
+                aaaaa.map((i) => {
+                    return (
+                        <>
+                            <p>{i.email}</p>
+                        </>
+                    )
+
+                })
+            } */}
 
             <div className=' mx-8 mt-[5em]'>
                 <span className='font-bold text-2xl m-4 '>Cart Total</span>

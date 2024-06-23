@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import newcollection from '../Assets/new_collections'
 import bannermens from '../Assets/banner_mens.png'
 
+
+import { ShopContext } from '../../Context/ShopContext'
+
 const NewCollection = () => {
+
+    const { newcoll } = useContext(ShopContext)
+    console.log(newcoll)
     return (
         <>
             <h2 className='font-bold text-4xl my-[1.5em] text-center '>New Collections</h2>
             <div className='flex justify-center flex-wrap  mt-[1em] gradiant  p-3 h-[100%]'>
-                {newcollection.map((items) => {
+                {newcoll.map((items) => {
                     return (
                         <>
                             <div className='w-[118px]  sm:w-[19vw]  m-[5px] sm:m-[7px] lg:m-[12px]' key={items.id}>
@@ -22,6 +28,7 @@ const NewCollection = () => {
                     )
                 })}
             </div >
+
         </>
     )
 }
