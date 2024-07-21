@@ -31,7 +31,7 @@ const ShopContextProvider = (props) => {
                 theme: "light",
                 transition: Bounce,
             })
-            await fetch('http://localhost:9000/cart', {
+            await fetch('https://store-e.vercel.app/cart', {
                 method: "POST",
                 headers: {
                     Accept: 'application/form-data',
@@ -66,14 +66,14 @@ const ShopContextProvider = (props) => {
 
     //Getting products from database
     const getapidata = async () => {
-        const getapi = await fetch('http://localhost:9000/addproducts')
+        const getapi = await fetch('https://store-e.vercel.app/addproducts')
         const result = await getapi.json()
         setnewdata(result)
     }
 
     //Gtting carts from Database
     const getcartdataf = async () => {
-        const cartitem = await fetch('http://localhost:9000/getcart', {
+        const cartitem = await fetch('https://store-e.vercel.app/getcart', {
             method: "POST",
             headers: {
                 Accept: 'application/form-data',
@@ -101,7 +101,7 @@ const ShopContextProvider = (props) => {
             theme: "light",
             transition: Bounce,
         })
-        const detetecarts = await fetch(`http://localhost:9000/getcart/${id}`, {
+        const detetecarts = await fetch(`https://store-e.vercel.app/getcart/${id}`, {
             method: "DELETE",
             headers: {
                 'auth-token': `${localStorage.getItem('auth-token')}`,
@@ -117,7 +117,7 @@ const ShopContextProvider = (props) => {
 
     const newcollection = async () => {
 
-        const fetchcollection = await fetch("http://localhost:9000/newcollection")
+        const fetchcollection = await fetch("https://store-e.vercel.app/newcollection")
         const res = await fetchcollection.json()
         setnewcollectiondata(res)
     }

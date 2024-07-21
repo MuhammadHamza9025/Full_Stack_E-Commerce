@@ -12,7 +12,7 @@ const Signup = () => {
         let resdata = ''
         const data = { Username, email, password }
         e.preventDefault()
-        const fetchlogin = await fetch('http://localhost:9000/signup', {
+        const fetchlogin = await fetch('https://backend-w1zs.vercel.app/signup', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

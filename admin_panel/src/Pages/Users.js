@@ -8,7 +8,7 @@ const Users = () => {
 
 
     const fetchusers = async () => {
-        const fetchapi = await fetch('http://localhost:9000/users')
+        const fetchapi = await fetch('https://backend-puce-zeta.vercel.app/users')
         const res = await fetchapi.json()
         setusers(res)
     }

@@ -26,7 +26,7 @@ const AddProducts = ({ getapi, data }) => {
 
 
 
-        const fetchapi = await fetch('http://localhost:9000/addproducts', {
+        const fetchapi = await fetch('https://backend-w1zs.vercel.app/addproducts', {
             method: 'POST',
             body: formdata,
             // headers: {

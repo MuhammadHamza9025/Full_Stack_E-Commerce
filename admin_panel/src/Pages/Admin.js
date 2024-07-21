@@ -11,7 +11,7 @@ const Admin = () => {
 
     const [data, setdata] = useState([])
     const getapi = async () => {
-        const getdata = await fetch('http://localhost:9000/addproducts')
+        const getdata = await fetch('https://backend-puce-zeta.vercel.app/addproducts')
         const result = await getdata.json()
         setdata(result)
 

@@ -5,7 +5,7 @@ const ShowProducts = ({ data, getapi }) => {
     const deleteproduct = async (id) => {
         console.log(id)
         try {
-            const resp = await fetch(`http://localhost:9000/addproducts/${id}`, {
+            const resp = await fetch(`https://backend-puce-zeta.vercel.app/addproducts/${id}`, {
                 method: "DELETE",
             });
             // Refresh data after successful delete

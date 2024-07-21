@@ -13,7 +13,7 @@ const LoginSignincommon = () => {
         const data = { email, password }
         let resdata = '';
         e.preventDefault()
-        const fetchlogin = await fetch('http://localhost:9000/login', {
+        const fetchlogin = await fetch('https://backend-w1zs.vercel.app/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
