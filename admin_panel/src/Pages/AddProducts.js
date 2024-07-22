@@ -22,13 +22,18 @@ const AddProducts = ({ getapi, data }) => {
         formdata.append('new_price', new_price)
         formdata.append('old_price', old_price)
         formdata.append('id', id)
-        console.log(typeof (id))
+        formdata.forEach((value, key) => {
+            console.log(`${key}:`, value);
+        });
 
 
 
-        const fetchapi = await fetch('https://backend-w1zs.vercel.app/addproducts', {
+
+
+        const fetchapi = await fetch('http://localhost:9000/addproducts', {
             method: 'POST',
             body: formdata,
+            // .../ 
             // headers: {
             //     "Content-Type": "application/json",
             //     "Content-Type": "multipart/form-data",

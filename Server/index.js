@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://Hamza:2vFfwKwATPXWmJy8@social.0drhd5s.mongodb.ne
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '/tmp'); // Save files to /tmp directory on Vercel
+        cb(null, 'uploads/images'); // Save files to /tmp directory on Vercel
     },
     filename: (req, file, cb) => {
         cb(null, `${file.originalname}_${Date.now()}${path.extname(file.originalname)}`);
@@ -30,7 +30,7 @@ const uploads = multer({ storage: storage });
 app.post('/upload', uploads.single('image'), (req, res) => {
     res.json({
         success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
+        image_url: `https://backend-w1zs.vercel.app/images/${req.file.filename}`
     });
 });
 ///////////////////////////////////////////////////////
@@ -39,13 +39,14 @@ app.post('/upload', uploads.single('image'), (req, res) => {
 app.post('/addproducts', uploads.single('image'), async (req, res) => {
     const { name, category, old_price, new_price, image, id } = req.body;
 
+    console.log(req.body)
     const database = Users.create({
         name: name,
         category: category,
         old_price: old_price,
         new_price: new_price,
         id: Date.now(),
-        image: `http://localhost:${port}/images/${req.file.filename}`
+        image: `https://backend-puce-zeta.vercel.app/images/${req.file.filename}`
     })
     res.status(200).json(database)
 })

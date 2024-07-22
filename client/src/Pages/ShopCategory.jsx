@@ -8,6 +8,7 @@ const ShopCategory = (props, { category }) => {
 
 
     const { all_product1 } = useContext(ShopContext)
+    console.log(all_product1)
     // const newarray = all_product.concat(newdata)
     // console.log(newdata)
 

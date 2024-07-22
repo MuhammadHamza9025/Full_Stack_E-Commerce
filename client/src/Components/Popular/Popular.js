@@ -9,12 +9,12 @@ const Popular = () => {
                 {data.map((items) => {
                     return (
                         <>
-                            <div className='w-[118px] sm:w-[19vw]  m-[5px] sm:m-[7px] lg:m-[12px]' key={items.id}>
+                            <div className='w-[152px] sm:w-[19vw]  m-[5px] sm:m-[7px] lg:m-[12px]' key={items.id}>
                                 <img src={items.image} alt="" className='h-[140px] sm:h-[200px] lg:h-[250px] w-[100%]' />
-                                <span className='text-gray-800 max-w-[100%] my-10 text-xs sm:text-sm lg:text-balance'>{items.name}</span>
+                                <span className='text-gray-800 max-w-[100%] my-10 text-xs sm:text-sm '>{items.name.substring(0, 23) + '...'}</span>
                                 <br />
-                                <span className='text-sx'>${items.new_price}</span>
-                                <span className='line-through mx-10 text-gray-400 text-xs'>${items.old_price}</span>
+                                <span className='text-xs text-red-500 font-semibold'>${items.new_price}</span>
+                                <span className='line-through italic mx-10 text-gray-400 text-xs'>${items.old_price}</span>
 
                             </div>
                         </>

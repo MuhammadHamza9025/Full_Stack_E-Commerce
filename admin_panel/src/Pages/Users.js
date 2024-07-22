@@ -24,7 +24,7 @@ const Users = () => {
 
 
         try {
-            const deleteuse = await fetch(`http://localhost:9000/users/${id}`, {
+            const deleteuse = await fetch(`https://backend-puce-zeta.vercel.app/users/${id}`, {
                 method: 'DELETE'
             })
             toast.info('User Deleted !', {
@@ -105,7 +105,7 @@ const Users = () => {
                                             </th>
 
                                             <td class="px-6 py-4 text-right">
-                                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => deleteusers(items._id)} >Delete</a>
+                                                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => deleteusers(items._id)} >Delete</a>
                                             </td>
                                         </tr>
 
